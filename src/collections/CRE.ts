@@ -1,4 +1,8 @@
 import { CollectionConfig } from 'payload/types'
+import { Class } from './Class'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+import config from '@payload-config'
+import { Topic } from './Topics'
 
 export const CRE: CollectionConfig = {
   slug: 'cREQuestion',
@@ -8,14 +12,9 @@ export const CRE: CollectionConfig = {
   },
   fields: [
     {
-      name: 'Topic',
-      type: 'select',
-      options: [
-        {
-          label: 'The Bible',
-          value: 'thebible',
-        },
-      ],
+      name: 'Question Image',
+      type: 'upload',
+      relationTo: 'media',
     },
     {
       name: 'Question',
@@ -29,35 +28,17 @@ export const CRE: CollectionConfig = {
       type: 'row',
       fields: [
         {
-          name: 'Grades',
-          type: 'radio',
-          defaultValue: 'gradeone',
-          options: [
-            {
-              label: 'Grade One',
-              value: 'gradeone',
-            },
-            {
-              label: 'Grade Two',
-              value: 'gradetwo',
-            },
-            {
-              label: 'Grade Three',
-              value: 'gradethree',
-            },
-            {
-              label: 'Grade Four',
-              value: 'gradefour',
-            },
-            {
-              label: 'Grade Five',
-              value: 'gradefive',
-            },
-            {
-              label: 'Grade Six',
-              value: 'gradesix',
-            },
-          ],
+          name: 'Topic',
+          type: 'relationship',
+          relationTo: [Topic.slug],
+          filterOptions: ({ siblingData }) => {
+            console.log(siblingData)
+            return {
+              Subject: {
+                equals: 'cREQuestion',
+              },
+            }
+          },
         },
         {
           name: 'Right Answer',

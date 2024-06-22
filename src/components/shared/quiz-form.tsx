@@ -1,24 +1,12 @@
 'use client'
 import React, { useRef, useState } from 'react'
 import { Button } from '../ui/button'
+import { CREQuestion } from '@/payload-types'
+import Image from 'next/image'
 
-type Tquestion = {
-  id: number
-  Topic: string
-  Question: string
-  answerone: string
-  answertwo: string
-  answerthree: string
-  answerfour: string
-  Grades: string
-  'Right Answer': string
-  updatedAt: string
-  createdAt: string
-}
-
-export default function QuizForm({ quizzes }: { quizzes: Tquestion[] }) {
+export default function QuizForm({ quizzes }: { quizzes: CREQuestion[] }) {
   let [index, setIndex] = useState(0)
-  const [question, setQuestion] = useState(quizzes[index])
+  const [question, setQuestion] = useState<CREQuestion>(quizzes[index])
   const [lock, setLock] = useState(false)
   const [score, setScore] = useState(0)
   const [result, setResult] = useState(false)
@@ -61,7 +49,6 @@ export default function QuizForm({ quizzes }: { quizzes: Tquestion[] }) {
       }
     }
   }
-
   const next = () => {
     if (lock == true) {
       if (index === quizzes.length - 1) {
@@ -78,9 +65,14 @@ export default function QuizForm({ quizzes }: { quizzes: Tquestion[] }) {
       })
     }
   }
-
+  if (question == null)
+    return (
+      <div className="w-full md:w-1/2 mx-auto h-full bg-white rounded-xl p-2 items-center justify-center flex flex-col">
+        <p className="text-2xl font-bold text-black ">No Questions</p>
+      </div>
+    )
   return (
-    <div className="w-full md:w-1/2 mx-auto h-full bg-white rounded-xl p-2 flex flex-col">
+    <div className="w-full md:w-1/2 mx-auto h-auto bg-white rounded-xl p-2 flex flex-col">
       {result ? (
         <div className="w-full h-full flex flex-col items-center justify-center gap-5">
           <h2 className="text-black text-3xl font-bold">
@@ -90,14 +82,28 @@ export default function QuizForm({ quizzes }: { quizzes: Tquestion[] }) {
         </div>
       ) : (
         <>
-          {' '}
           <p className="text-black text-center my-2 font-bold tracking-widest">
             {index + 1} of {quizzes.length} Questions
           </p>
-          <h2 className="font-bold text-2xl text-yellow-500 h-full">
+          {question['Question Image'] ? (
+            <div className="w-full h-[20rem] relative">
+              <Image
+                unoptimized
+                // @ts-ignore
+                src={question['Question Image'].url}
+                fill
+                // @ts-ignore
+                alt={question['Question Image'].alt}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+          <h2 className="font-bold text-2xl text-yellow-500 h-auto my-4">
             {index + 1}. {question.Question}
           </h2>
-          <ul className="grid gap-2 h-full">
+
+          <ul className="grid gap-2 h-[20rem]">
             <li
               className="text-blue-500 border-2 border-blue-500 rounded-md text-center flex"
               ref={answerone}

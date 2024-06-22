@@ -8,12 +8,15 @@
 
 export interface Config {
   collections: {
+    class: Class;
+    topics: Topic;
     cREQuestion: CREQuestion;
     englishQuestion: EnglishQuestion;
-    geographyQuestion: GeographyQuestion;
+    socialStudiesQuestion: SocialStudiesQuestion;
     kiswahiliQuestion: KiswahiliQuestion;
     mathsQuestion: MathsQuestion;
     scienceQuestion: ScienceQuestion;
+    media: Media;
     users: User;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -26,17 +29,106 @@ export interface Config {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "class".
+ */
+export interface Class {
+  id: number;
+  Class?: string | null;
+  'Class Image'?: number | Media | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt?: string | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    tablet?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "topics".
+ */
+export interface Topic {
+  id: number;
+  'Topic Image'?: number | Media | null;
+  Topic?: string | null;
+  Subject?:
+    | (
+        | 'cREQuestion'
+        | 'englishQuestion'
+        | 'geographyQuestion'
+        | 'kiswahiliQuestion'
+        | 'mathsQuestion'
+        | 'scienceQuestion'
+      )
+    | null;
+  Class?: {
+    relationTo: 'class';
+    value: number | Class;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cREQuestion".
  */
 export interface CREQuestion {
   id: number;
-  Topic?: 'thebible' | null;
+  'Question Image'?: number | Media | null;
   Question?: string | null;
   answerone?: string | null;
   answertwo?: string | null;
   answerthree?: string | null;
   answerfour?: string | null;
-  Grades?: ('gradeone' | 'gradetwo' | 'gradethree' | 'gradefour' | 'gradefive' | 'gradesix') | null;
+  Class?: {
+    relationTo: 'class';
+    value: number | Class;
+  } | null;
+  Topic?: {
+    relationTo: 'topics';
+    value: number | Topic;
+  } | null;
   'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
   updatedAt: string;
   createdAt: string;
@@ -47,30 +139,44 @@ export interface CREQuestion {
  */
 export interface EnglishQuestion {
   id: number;
-  Topic?: 'nouns' | null;
+  'Question Image'?: number | Media | null;
   Question?: string | null;
   answerone?: string | null;
   answertwo?: string | null;
   answerthree?: string | null;
   answerfour?: string | null;
-  Grades?: ('gradeone' | 'gradetwo' | 'gradethree' | 'gradefour' | 'gradefive' | 'gradesix') | null;
+  Class?: {
+    relationTo: 'class';
+    value: number | Class;
+  } | null;
+  Topic?: {
+    relationTo: 'topics';
+    value: number | Topic;
+  } | null;
   'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "geographyQuestion".
+ * via the `definition` "socialStudiesQuestion".
  */
-export interface GeographyQuestion {
+export interface SocialStudiesQuestion {
   id: number;
-  Topic?: 'theearth' | null;
+  'Question Image'?: number | Media | null;
   Question?: string | null;
   answerone?: string | null;
   answertwo?: string | null;
   answerthree?: string | null;
   answerfour?: string | null;
-  Grades?: ('gradeone' | 'gradetwo' | 'gradethree' | 'gradefour' | 'gradefive' | 'gradesix') | null;
+  Class?: {
+    relationTo: 'class';
+    value: number | Class;
+  } | null;
+  Topic?: {
+    relationTo: 'topics';
+    value: number | Topic;
+  } | null;
   'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
   updatedAt: string;
   createdAt: string;
@@ -81,13 +187,20 @@ export interface GeographyQuestion {
  */
 export interface KiswahiliQuestion {
   id: number;
-  Topic?: 'vitendawili' | null;
+  'Question Image'?: number | Media | null;
   Question?: string | null;
   answerone?: string | null;
   answertwo?: string | null;
   answerthree?: string | null;
   answerfour?: string | null;
-  Grades?: ('gradeone' | 'gradetwo' | 'gradethree' | 'gradefour' | 'gradefive' | 'gradesix') | null;
+  Class?: {
+    relationTo: 'class';
+    value: number | Class;
+  } | null;
+  Topic?: {
+    relationTo: 'topics';
+    value: number | Topic;
+  } | null;
   'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
   updatedAt: string;
   createdAt: string;
@@ -98,13 +211,20 @@ export interface KiswahiliQuestion {
  */
 export interface MathsQuestion {
   id: number;
-  Topic?: 'numbers' | null;
+  'Question Image'?: number | Media | null;
   Question?: string | null;
   answerone?: string | null;
   answertwo?: string | null;
   answerthree?: string | null;
   answerfour?: string | null;
-  Grades?: ('gradeone' | 'gradetwo' | 'gradethree' | 'gradefour' | 'gradefive' | 'gradesix') | null;
+  Class?: {
+    relationTo: 'class';
+    value: number | Class;
+  } | null;
+  Topic?: {
+    relationTo: 'topics';
+    value: number | Topic;
+  } | null;
   'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
   updatedAt: string;
   createdAt: string;
@@ -115,13 +235,20 @@ export interface MathsQuestion {
  */
 export interface ScienceQuestion {
   id: number;
-  Topic?: 'plants' | null;
+  'Question Image'?: number | Media | null;
   Question?: string | null;
   answerone?: string | null;
   answertwo?: string | null;
   answerthree?: string | null;
   answerfour?: string | null;
-  Grades?: ('gradeone' | 'gradetwo' | 'gradethree' | 'gradefour' | 'gradefive' | 'gradesix') | null;
+  Class?: {
+    relationTo: 'class';
+    value: number | Class;
+  } | null;
+  Topic?: {
+    relationTo: 'topics';
+    value: number | Topic;
+  } | null;
   'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
   updatedAt: string;
   createdAt: string;
@@ -134,6 +261,9 @@ export interface User {
   id: number;
   updatedAt: string;
   createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;

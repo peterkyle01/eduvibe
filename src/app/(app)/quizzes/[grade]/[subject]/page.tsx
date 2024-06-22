@@ -13,18 +13,19 @@ export default async function Subjects({ params }: { params: { grade: string; su
           <h1 className="text-5xl font-bold text-sky-500 text-center">{subject.toUpperCase()}</h1>
           <div className="grow grid grid-cols-2 md:grid-cols-3 gap-2 p-2">
             {topics.map((topic) => (
-              <Link href={`/quizzes/${grade}/${subject}/${topic}`} key={topic}>
+              <Link href={`/quizzes/${grade}/${subject}/${topic.id}`} key={topic.id}>
                 <div className="w-full h-full bg-fuchsia-200 rounded-lg flex relative">
                   <Image
-                    src={'/img2.webp'}
+                    // @ts-ignore
+                    src={topic['Topic Image'].url}
                     fill
-                    alt="grade-page-image"
+                    // @ts-ignore
+                    alt={topic['Topic Image'].alt}
                     className="object-cover rounded-lg"
                   />
                   <div className="w-full h-full absolute top-0 bg-sky-500/20"></div>
                   <p className="m-auto z-10 text-sm md:text-xl font-bold text-yellow-500">
-                    {/* @ts-ignore */}
-                    {topic?.toUpperCase()}
+                    {topic?.Topic?.toUpperCase()}
                   </p>
                 </div>
               </Link>

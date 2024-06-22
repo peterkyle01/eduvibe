@@ -1,4 +1,6 @@
 import { CollectionConfig } from 'payload/types'
+import { Topic } from './Topics'
+import { Class } from './Class'
 
 export const Science: CollectionConfig = {
   slug: 'scienceQuestion',
@@ -8,14 +10,9 @@ export const Science: CollectionConfig = {
   },
   fields: [
     {
-      name: 'Topic',
-      type: 'select',
-      options: [
-        {
-          label: 'Plants',
-          value: 'plants',
-        },
-      ],
+      name: 'Question Image',
+      type: 'upload',
+      relationTo: 'media',
     },
     {
       name: 'Question',
@@ -29,35 +26,17 @@ export const Science: CollectionConfig = {
       type: 'row',
       fields: [
         {
-          name: 'Grades',
-          type: 'radio',
-          defaultValue: 'gradeone',
-          options: [
-            {
-              label: 'Grade One',
-              value: 'gradeone',
-            },
-            {
-              label: 'Grade Two',
-              value: 'gradetwo',
-            },
-            {
-              label: 'Grade Three',
-              value: 'gradethree',
-            },
-            {
-              label: 'Grade Four',
-              value: 'gradefour',
-            },
-            {
-              label: 'Grade Five',
-              value: 'gradefive',
-            },
-            {
-              label: 'Grade Six',
-              value: 'gradesix',
-            },
-          ],
+          name: 'Topic',
+          type: 'relationship',
+          relationTo: [Topic.slug],
+          filterOptions: ({ siblingData }) => {
+            console.log(siblingData)
+            return {
+              Subject: {
+                equals: 'scienceQuestion',
+              },
+            }
+          },
         },
         {
           name: 'Right Answer',
