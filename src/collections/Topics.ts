@@ -1,5 +1,6 @@
 import { CollectionConfig } from 'payload/types'
 import { Class } from './Class'
+import { Subject } from './Subjects'
 
 export const Topic: CollectionConfig = {
   slug: 'topics',
@@ -22,38 +23,8 @@ export const Topic: CollectionConfig = {
         },
         {
           name: 'Subject',
-          type: 'select',
-          options: [
-            {
-              label: 'CRE',
-              value: 'cREQuestion',
-            },
-            {
-              label: 'English',
-              value: 'englishQuestion',
-            },
-            {
-              label: 'Geography',
-              value: 'geographyQuestion',
-            },
-            {
-              label: 'Kiswahili',
-              value: 'kiswahiliQuestion',
-            },
-            {
-              label: 'Maths',
-              value: 'mathsQuestion',
-            },
-            {
-              label: 'Science',
-              value: 'scienceQuestion',
-            },
-          ],
-        },
-        {
-          name: 'Class',
           type: 'relationship',
-          relationTo: [Class.slug],
+          relationTo: [Subject.slug],
         },
       ],
     },

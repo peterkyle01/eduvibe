@@ -5,7 +5,6 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -30,29 +29,37 @@ export function Menu() {
             The website that helps teachers and learners access cbc lessons with ease.
           </SheetDescription>
           <ul className="text-sky-500 gap-5 w-full h-80 grid">
-            <Link href={'/games'}>
-              <li className="flex gap-2 items-center">
-                <FaGamepad size={20} /> Games
-              </li>
-            </Link>
-            <Link href={'/lessons'}>
-              <li className="flex gap-2 items-center">
-                <FaBook size={15} />
-                Lessons
-              </li>
-            </Link>
-            <Link href={'/quizzes'}>
-              <li className="flex gap-2 items-center">
-                <FaCheckSquare size={15} />
-                Quizzes
-              </li>
-            </Link>
-            <Link href={'/contacts'}>
-              <li className="flex gap-2 items-center">
-                <FaEnvelope size={15} />
-                Contacts
-              </li>
-            </Link>
+            <SheetClose asChild>
+              <Link href={'/games'}>
+                <li className="flex gap-2 items-center">
+                  <FaGamepad size={20} /> Games
+                </li>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href={'/lessons'}>
+                <li className="flex gap-2 items-center">
+                  <FaBook size={15} />
+                  Lessons
+                </li>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href={'/quizzes'}>
+                <li className="flex gap-2 items-center">
+                  <FaCheckSquare size={15} />
+                  Quizzes
+                </li>
+              </Link>
+            </SheetClose>
+            <SheetClose asChild>
+              <Link href={'/contacts'}>
+                <li className="flex gap-2 items-center">
+                  <FaEnvelope size={15} />
+                  Contacts
+                </li>
+              </Link>
+            </SheetClose>
           </ul>
         </SheetHeader>
       </SheetContent>

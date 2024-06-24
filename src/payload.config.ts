@@ -7,15 +7,11 @@ import { fileURLToPath } from 'url'
 
 import { Users } from './collections/Users'
 import { s3Storage } from '@payloadcms/storage-s3'
-import { English } from './collections/English'
-import { CRE } from './collections/CRE'
-import { Geography } from './collections/SocialStudies'
-import { Kiswahili } from './collections/Kiswahili'
-import { Maths } from './collections/Maths'
-import { Science } from './collections/Science'
 import { Topic } from './collections/Topics'
 import { Media } from './collections/Media'
 import { Class } from './collections/Class'
+import { Subject } from './collections/Subjects'
+import { Question } from './collections/Question'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -24,7 +20,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Class, Topic, CRE, English, Geography, Kiswahili, Maths, Science, Media, Users],
+  collections: [Class, Subject, Topic, Question, Media, Users],
   editor: lexicalEditor({}),
   // plugins: [payloadCloud()], // TODO: Re-enable when cloud supports 3.0
   secret: process.env.PAYLOAD_SECRET || '',

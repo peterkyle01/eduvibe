@@ -1,7 +1,7 @@
-import { Inter } from 'next/font/google'
+import { Open_Sans } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] })
+const openSans = Open_Sans({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Edu Vibe',
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased ${inter.className}`}>{children}</body>
+      <body className={`antialiased ${openSans.className}`}>{children}</body>
     </html>
   )
 }

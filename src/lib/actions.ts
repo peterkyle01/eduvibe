@@ -2,7 +2,7 @@
 import _ from 'lodash'
 import config from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { CREQuestion, MathsQuestion, Topic } from '@/payload-types'
+import { Question, Topic } from '@/payload-types'
 import { Users } from '@/collections/Users'
 
 export async function getClasses() {
@@ -13,7 +13,20 @@ export async function getClasses() {
   return docs
 }
 
-export async function getTopics(subject: string, grade: string): Promise<Topic[]> {
+export async function getSubjects({ grade }: { grade: string }) {
+  const payload = await getPayloadHMR({ config })
+  const { docs } = await payload.find({
+    collection: 'subject',
+  })
+
+  return docs.filter((doc) =>
+    doc.Class?.every(
+      (singleDoc) => typeof singleDoc.value !== 'number' && singleDoc.value.Class === grade,
+    ),
+  )
+}
+
+export async function getTopics({ subject }: { subject: string }): Promise<Topic[]> {
   const data = await fetch(`${process.env.WEB_API}/api/topics`, {
     headers: {
       Authorization: `${Users.slug} API-Key ${process.env.API_KEY}`,
@@ -21,11 +34,8 @@ export async function getTopics(subject: string, grade: string): Promise<Topic[]
   })
 
   const topics = await data.json()
-
-  return topics.docs.filter(
-    // @ts-ignore
-    (topic: Topic) => topic.Subject === subject && topic.Class?.value.Class === grade,
-  )
+  //@ts-ignore
+  return topics.docs.filter((doc) => doc.Subject.value.Subject === subject)
 }
 
 export async function getQuestions({
@@ -36,8 +46,8 @@ export async function getQuestions({
   grade: string
   subject: string
   topic: string
-}): Promise<CREQuestion[]> {
-  const data = await fetch(`${process.env.WEB_API}/api/${subject}`, {
+}): Promise<Question[]> {
+  const data = await fetch(`${process.env.WEB_API}/api/question`, {
     headers: {
       Authorization: `${Users.slug} API-Key ${process.env.API_KEY}`,
     },
@@ -46,9 +56,10 @@ export async function getQuestions({
   const questions = await data.json()
 
   return questions.docs.filter(
-    // @ts-ignore
-    (question: MathsQuestion) =>
-      // @ts-ignore
-      question.Topic.value.id === Number(topic),
+    //@ts-ignore
+    (doc) =>
+      doc.Class.value.Class === grade &&
+      doc.Subject.value.Subject === subject &&
+      doc.Topic.value.Topic === topic,
   )
 }

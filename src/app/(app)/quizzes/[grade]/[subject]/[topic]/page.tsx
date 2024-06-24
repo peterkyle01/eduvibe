@@ -1,5 +1,6 @@
 import QuizForm from '@/components/shared/quiz-form'
 import { getQuestions } from '@/lib/actions'
+import { unstable_noStore } from 'next/cache'
 import Image from 'next/image'
 
 export default async function TopicDetails({
@@ -7,6 +8,7 @@ export default async function TopicDetails({
 }: {
   params: { grade: string; subject: string; topic: string }
 }) {
+  unstable_noStore()
   const { grade, subject, topic } = params
   const questions = await getQuestions({ grade, subject, topic })
   console.log(questions)

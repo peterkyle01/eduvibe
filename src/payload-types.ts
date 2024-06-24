@@ -9,13 +9,9 @@
 export interface Config {
   collections: {
     class: Class;
+    subject: Subject;
     topics: Topic;
-    cREQuestion: CREQuestion;
-    englishQuestion: EnglishQuestion;
-    socialStudiesQuestion: SocialStudiesQuestion;
-    kiswahiliQuestion: KiswahiliQuestion;
-    mathsQuestion: MathsQuestion;
-    scienceQuestion: ScienceQuestion;
+    question: Question;
     media: Media;
     users: User;
     'payload-preferences': PayloadPreference;
@@ -86,34 +82,41 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subject".
+ */
+export interface Subject {
+  id: number;
+  'Subject Image'?: number | Media | null;
+  Subject?: string | null;
+  Class?:
+    | {
+        relationTo: 'class';
+        value: number | Class;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "topics".
  */
 export interface Topic {
   id: number;
   'Topic Image'?: number | Media | null;
   Topic?: string | null;
-  Subject?:
-    | (
-        | 'cREQuestion'
-        | 'englishQuestion'
-        | 'geographyQuestion'
-        | 'kiswahiliQuestion'
-        | 'mathsQuestion'
-        | 'scienceQuestion'
-      )
-    | null;
-  Class?: {
-    relationTo: 'class';
-    value: number | Class;
+  Subject?: {
+    relationTo: 'subject';
+    value: number | Subject;
   } | null;
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "cREQuestion".
+ * via the `definition` "question".
  */
-export interface CREQuestion {
+export interface Question {
   id: number;
   'Question Image'?: number | Media | null;
   Question?: string | null;
@@ -125,125 +128,9 @@ export interface CREQuestion {
     relationTo: 'class';
     value: number | Class;
   } | null;
-  Topic?: {
-    relationTo: 'topics';
-    value: number | Topic;
-  } | null;
-  'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "englishQuestion".
- */
-export interface EnglishQuestion {
-  id: number;
-  'Question Image'?: number | Media | null;
-  Question?: string | null;
-  answerone?: string | null;
-  answertwo?: string | null;
-  answerthree?: string | null;
-  answerfour?: string | null;
-  Class?: {
-    relationTo: 'class';
-    value: number | Class;
-  } | null;
-  Topic?: {
-    relationTo: 'topics';
-    value: number | Topic;
-  } | null;
-  'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "socialStudiesQuestion".
- */
-export interface SocialStudiesQuestion {
-  id: number;
-  'Question Image'?: number | Media | null;
-  Question?: string | null;
-  answerone?: string | null;
-  answertwo?: string | null;
-  answerthree?: string | null;
-  answerfour?: string | null;
-  Class?: {
-    relationTo: 'class';
-    value: number | Class;
-  } | null;
-  Topic?: {
-    relationTo: 'topics';
-    value: number | Topic;
-  } | null;
-  'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "kiswahiliQuestion".
- */
-export interface KiswahiliQuestion {
-  id: number;
-  'Question Image'?: number | Media | null;
-  Question?: string | null;
-  answerone?: string | null;
-  answertwo?: string | null;
-  answerthree?: string | null;
-  answerfour?: string | null;
-  Class?: {
-    relationTo: 'class';
-    value: number | Class;
-  } | null;
-  Topic?: {
-    relationTo: 'topics';
-    value: number | Topic;
-  } | null;
-  'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "mathsQuestion".
- */
-export interface MathsQuestion {
-  id: number;
-  'Question Image'?: number | Media | null;
-  Question?: string | null;
-  answerone?: string | null;
-  answertwo?: string | null;
-  answerthree?: string | null;
-  answerfour?: string | null;
-  Class?: {
-    relationTo: 'class';
-    value: number | Class;
-  } | null;
-  Topic?: {
-    relationTo: 'topics';
-    value: number | Topic;
-  } | null;
-  'Right Answer'?: ('answerone' | 'answertwo' | 'answerthree' | 'answerfour') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "scienceQuestion".
- */
-export interface ScienceQuestion {
-  id: number;
-  'Question Image'?: number | Media | null;
-  Question?: string | null;
-  answerone?: string | null;
-  answertwo?: string | null;
-  answerthree?: string | null;
-  answerfour?: string | null;
-  Class?: {
-    relationTo: 'class';
-    value: number | Class;
+  Subject?: {
+    relationTo: 'subject';
+    value: number | Subject;
   } | null;
   Topic?: {
     relationTo: 'topics';

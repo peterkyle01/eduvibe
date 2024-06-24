@@ -1,12 +1,15 @@
 import { CollectionConfig } from 'payload/types'
-import { Topic } from './Topics'
 import { Class } from './Class'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+import config from '@payload-config'
+import { Topic } from './Topics'
+import { Subject } from './Subjects'
 
-export const English: CollectionConfig = {
-  slug: 'englishQuestion',
+export const Question: CollectionConfig = {
+  slug: 'question',
   admin: {
-    useAsTitle: 'Question',
-    description: 'This is the English subject for all the Grade classes.',
+    useAsTitle: 'question',
+    description: 'This are the questions for all the Grade classes.',
   },
   fields: [
     {
@@ -26,14 +29,43 @@ export const English: CollectionConfig = {
       type: 'row',
       fields: [
         {
+          name: 'Class',
+          type: 'relationship',
+          relationTo: [Class.slug],
+        },
+        {
+          name: 'Subject',
+          type: 'relationship',
+          relationTo: [Subject.slug],
+          filterOptions: ({ data }) => {
+            if (data.Class)
+              return {
+                'Class.value': {
+                  equals: data?.Class?.value,
+                },
+              }
+            return {
+              'Class.value': {
+                equals: 0,
+              },
+            }
+          },
+        },
+        {
           name: 'Topic',
           type: 'relationship',
           relationTo: [Topic.slug],
-          filterOptions: ({ siblingData }) => {
-            console.log(siblingData)
+          filterOptions: ({ data }) => {
+            console.log(data)
+            if (data.Subject)
+              return {
+                'Subject.value': {
+                  equals: data?.Subject?.value,
+                },
+              }
             return {
-              Subject: {
-                equals: 'englishQuestion',
+              'Subject.value': {
+                equals: 0,
               },
             }
           },
