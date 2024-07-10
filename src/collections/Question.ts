@@ -56,7 +56,6 @@ export const Question: CollectionConfig = {
           type: 'relationship',
           relationTo: [Topic.slug],
           filterOptions: ({ data }) => {
-            console.log(data)
             if (data.Subject)
               return {
                 'Subject.value': {

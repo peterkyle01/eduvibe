@@ -11,7 +11,6 @@ export default async function TopicDetails({
   unstable_noStore()
   const { grade, subject, topic } = params
   const questions = await getQuestions({ grade, subject, topic })
-  console.log(questions)
   return (
     <section className="w-full h-full relative">
       <Image src={'/img2.webp'} fill alt="grade-page-image" className="object-cover" />
