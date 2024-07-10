@@ -1,12 +1,12 @@
 'use client'
 import React, { useRef, useState } from 'react'
 import { Button } from '../ui/button'
-import { CREQuestion } from '@/payload-types'
 import Image from 'next/image'
+import { Question } from '@/payload-types'
 
-export default function QuizForm({ quizzes }: { quizzes: CREQuestion[] }) {
+export default function QuizForm({ quizzes }: { quizzes: Question[] }) {
   let [index, setIndex] = useState(0)
-  const [question, setQuestion] = useState<CREQuestion>(quizzes[index])
+  const [question, setQuestion] = useState<Question>(quizzes[index])
   const [lock, setLock] = useState(false)
   const [score, setScore] = useState(0)
   const [result, setResult] = useState(false)
