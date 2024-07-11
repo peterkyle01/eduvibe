@@ -14,7 +14,7 @@ export default async function Subjects({ params }: { params: { grade: string; su
           <h1 className="text-3xl md:text-5xl font-bold text-sky-500 text-center">
             {subject.toUpperCase()}
           </h1>
-          <div className="grow grid grid-cols-3 md:grid-cols-4 grid-rows-3 md:grid-rows-2 gap-2 p-2">
+          <div className="grow grid grid-cols-2 md:grid-cols-4 grid-rows-3 md:grid-rows-2 gap-2 p-2">
             {topics.map((topic) => (
               <Link href={`/quizzes/${grade}/${subject}/${topic.Topic}`} key={topic.id}>
                 <div className="w-full h-full bg-fuchsia-200 rounded-lg flex relative">
